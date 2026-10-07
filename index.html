@@ -3,29 +3,193 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Attendance Scanner</title>
+  <title>Event Attendance & Meal Scanner</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
   <style>
-    body { font-family: system-ui, sans-serif; background: #f8fafc; color: #1e293b; padding: 16px; display: flex; justify-content: center; }
-    .app-card { background: #ffffff; width: 100%; max-width: 400px; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    h1 { font-size: 1.25rem; margin-bottom: 4px; text-align: center; }
-    p { font-size: 0.85rem; color: #64748b; text-align: center; margin-bottom: 16px; }
-    #reader { width: 100%; border-radius: 8px; overflow: hidden; }
-    #status { margin-top: 16px; padding: 12px; border-radius: 8px; font-weight: 600; text-align: center; display: none; font-size: 0.9rem; }
-    .status-success { background: #dcfce7; color: #166534; }
-    .status-error { background: #fee2e2; color: #991b1b; }
-    .manual-section { margin-top: 20px; }
-    label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; color: #475569; }
-    .input-group { display: flex; gap: 8px; }
-    input { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
-    .btn-submit { background: #0284c7; color: #fff; border: none; padding: 0 16px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .app-card {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 420px;
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      text-align: center;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .info-panel {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .info-item .label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .info-item .value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #38bdf8;
+      margin-top: 2px;
+    }
+
+    .info-full {
+      grid-column: span 2;
+      border-top: 1px solid var(--border);
+      padding-top: 6px;
+      margin-top: 4px;
+    }
+
+    #reader {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border) !important;
+      background: #000;
+    }
+
+    #status {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .status-success {
+      background: #064e3b;
+      color: #34d399;
+      border: 1px solid #059669;
+    }
+
+    .status-error {
+      background: #7f1d1d;
+      color: #f87171;
+      border: 1px solid #dc2626;
+    }
+
+    .manual-section {
+      margin-top: 20px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .input-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    input {
+      flex: 1;
+      background: #0f172a;
+      color: var(--text);
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-submit {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-submit:hover {
+      background: var(--primary-hover);
+    }
   </style>
 </head>
 <body>
 
 <div class="app-card">
-  <h1>Event Attendance</h1>
-  <p>Backend Auto-Validation Scanner</p>
+  <h1>Event Scanner</h1>
+  <p class="subtitle">Oct 8 & 9, 2026</p>
+
+  <div class="info-panel">
+    <div class="info-item">
+      <div class="label">Date</div>
+      <div class="value" id="currentDate">--</div>
+    </div>
+    <div class="info-item">
+      <div class="label">Time</div>
+      <div class="value" id="currentTime">--</div>
+    </div>
+    <div class="info-item info-full">
+      <div class="label">Active Backend Mode</div>
+      <div class="value" id="currentStage">Checking schedule...</div>
+    </div>
+  </div>
 
   <div id="reader"></div>
   <div id="status"></div>
@@ -40,29 +204,101 @@
 </div>
 
 <script>
-  // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE:
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzFFd-YQtvlnIHTzSBAo31FCzlfXpAGfZEX4gZoyXmbU-5F734GyP69hwSerbCR0dOO3g/exec";
 
   let isProcessing = false;
+  let lastScannedId = "";
+  let lastScanTime = 0;
+  const SCAN_COOLDOWN = 4000;
+
+  // Audio Feedback Synthesizer
+  function playSound(type) {
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'success') {
+        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+      } else {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(110, audioCtx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      }
+    } catch (e) {
+      console.log("Audio playback blocked", e);
+    }
+  }
+
+  // Live Dashboard Clock & Stage Matcher
+  function updateClockAndStage() {
+    const now = new Date();
+    document.getElementById('currentDate').innerText = now.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    document.getElementById('currentTime').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const day = now.getDate();
+    const timeDecimal = now.getHours() + (now.getMinutes() / 60);
+
+    let stageText = "Check-In / Arrival Mode";
+
+    if (year === 2026 && month === 9) {
+      if (day === 8) {
+        if (timeDecimal >= 11.5 && timeDecimal < 16.0) stageText = "Day 1 Lunch Active";
+        else if (timeDecimal >= 18.0 && timeDecimal < 22.0) stageText = "Day 1 Dinner Active";
+      } else if (day === 9) {
+        if (timeDecimal >= 7.5 && timeDecimal < 11.0) stageText = "Day 2 Breakfast Active";
+        else if (timeDecimal >= 11.5 && timeDecimal < 16.0) stageText = "Day 2 Lunch Active";
+        else if (timeDecimal >= 18.0 && timeDecimal < 22.0) stageText = "Day 2 Dinner Active";
+      }
+    }
+    document.getElementById('currentStage').innerText = stageText;
+  }
+
+  setInterval(updateClockAndStage, 1000);
+  updateClockAndStage();
 
   function showStatus(message, isSuccess) {
     const statusDiv = document.getElementById('status');
     statusDiv.innerText = message;
     statusDiv.className = isSuccess ? 'status-success' : 'status-error';
     statusDiv.style.display = 'block';
+    playSound(isSuccess ? 'success' : 'error');
   }
 
   function handleScan(scannedId) {
+    if (!scannedId) return;
+    const cleanId = scannedId.trim().toUpperCase();
+    const now = Date.now();
+
+    if (cleanId === lastScannedId && (now - lastScanTime < SCAN_COOLDOWN)) {
+      return; // Cooldown active
+    }
+
     if (isProcessing) return;
     isProcessing = true;
 
-    const cleanId = scannedId.trim().toUpperCase();
+    lastScannedId = cleanId;
+    lastScanTime = now;
+
     showStatus(`Verifying ${cleanId} with backend...`, true);
 
-    // Send request to Google Sheets backend for server-side verification
-fetch(SCRIPT_URL, {
+    // Call backend and read authoritative JSON response
+    fetch(SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors', // Bypasses browser strict CORS restrictions for Google Scripts
       headers: {
         'Content-Type': 'text/plain;charset=utf-8',
       },
@@ -71,13 +307,13 @@ fetch(SCRIPT_URL, {
         timestamp: new Date().toISOString() 
       })
     })
-    .then(() => {
-      // With 'no-cors', we display a generic success confirmation to the volunteer instantly
-      showStatus(`Processed scan for: ${cleanId}`, true);
+    .then(response => response.json())
+    .then(result => {
+      showStatus(result.message, result.success);
       setTimeout(() => {
         document.getElementById('status').style.display = 'none';
         isProcessing = false;
-      }, 3000);
+      }, 3500);
     })
     .catch(err => {
       console.error("Error:", err);
@@ -87,6 +323,7 @@ fetch(SCRIPT_URL, {
         isProcessing = false;
       }, 3000);
     });
+  }
 
   function submitManual() {
     const input = document.getElementById('manualId');
@@ -100,11 +337,11 @@ fetch(SCRIPT_URL, {
   const html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
     fps: 10, 
     qrbox: { width: 220, height: 220 } 
-  });
+  }, false);
   
   html5QrcodeScanner.render((decodedText) => {
     handleScan(decodedText);
-  });
+  }, (error) => {});
 </script>
 
 </body>
