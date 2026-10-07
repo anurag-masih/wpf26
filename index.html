@@ -3,208 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Attendance QR Scanner</title>
-  <!-- Modern Inter Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- HTML5 QR Scanner Library -->
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-  
+  <title>Event Attendance Scanner</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
   <style>
-    :root {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --primary: #38bdf8;
-      --primary-hover: #0284c7;
-      --border: #334155;
-      --success-bg: #064e3b;
-      --success-text: #34d399;
-      --success-border: #059669;
-      --error-bg: #7f1d1d;
-      --error-text: #f87171;
-      --error-border: #dc2626;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .app-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px 24px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    .header h1 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      color: var(--text);
-    }
-
-    .header p {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    #reader {
-      width: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--border) !important;
-      background: #000;
-    }
-
-    /* Style the html5-qrcode scanner UI */
-    #reader video {
-      border-radius: 12px;
-      object-fit: cover;
-    }
-
-    #reader button {
-      background-color: var(--primary) !important;
-      color: #0f172a !important;
-      font-weight: 600 !important;
-      padding: 10px 16px !important;
-      border-radius: 8px !important;
-      border: none !important;
-      cursor: pointer !important;
-      font-size: 0.875rem !important;
-      margin-top: 10px !important;
-      transition: background-color 0.2s;
-    }
-
-    #reader button:hover {
-      background-color: var(--primary-hover) !important;
-    }
-
-    #status {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-align: center;
-      display: none;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .status-success {
-      background-color: var(--success-bg);
-      color: var(--success-text);
-      border: 1px solid var(--success-border);
-    }
-
-    .status-error {
-      background-color: var(--error-bg);
-      color: var(--error-text);
-      border: 1px solid var(--error-border);
-    }
-
-    .divider {
-      margin: 24px 0;
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
-    .manual-section label {
-      display: block;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .input-group {
-      display: flex;
-      gap: 10px;
-    }
-
-    input[type="text"] {
-      flex: 1;
-      background-color: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 0.95rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    input[type="text"]:focus {
-      border-color: var(--primary);
-    }
-
-    .btn-submit {
-      background-color: var(--primary);
-      color: #0f172a;
-      font-weight: 600;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .btn-submit:hover {
-      background-color: var(--primary-hover);
-    }
+    body { font-family: system-ui, sans-serif; background: #f8fafc; color: #1e293b; padding: 16px; display: flex; justify-content: center; }
+    .app-card { background: #ffffff; width: 100%; max-width: 400px; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h1 { font-size: 1.25rem; margin-bottom: 4px; text-align: center; }
+    p { font-size: 0.85rem; color: #64748b; text-align: center; margin-bottom: 16px; }
+    #reader { width: 100%; border-radius: 8px; overflow: hidden; }
+    #status { margin-top: 16px; padding: 12px; border-radius: 8px; font-weight: 600; text-align: center; display: none; font-size: 0.9rem; }
+    .status-success { background: #dcfce7; color: #166534; }
+    .status-error { background: #fee2e2; color: #991b1b; }
+    .manual-section { margin-top: 20px; }
+    label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; color: #475569; }
+    .input-group { display: flex; gap: 8px; }
+    input { flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
+    .btn-submit { background: #0284c7; color: #fff; border: none; padding: 0 16px; border-radius: 6px; font-weight: 600; cursor: pointer; }
   </style>
 </head>
 <body>
 
 <div class="app-card">
-  <div class="header">
-    <h1>Attendance Scanner</h1>
-    <p>Scan QR code or enter ID manually</p>
-  </div>
+  <h1>Event Attendance</h1>
+  <p>Backend Auto-Validation Scanner</p>
 
-  <!-- QR Camera Scanner -->
   <div id="reader"></div>
-
-  <!-- Alert Banner -->
   <div id="status"></div>
 
-  <hr class="divider">
-
-  <!-- Manual Entry Fallback -->
   <div class="manual-section">
-    <label for="manualId">Manual Input</label>
+    <label for="manualId">Manual ID Entry</label>
     <div class="input-group">
       <input type="text" id="manualId" placeholder="e.g. R488G" autocomplete="off">
       <button class="btn-submit" onclick="submitManual()">Submit</button>
@@ -213,11 +40,10 @@
 </div>
 
 <script>
-  // Your Google Apps Script Web App Endpoint
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzFFd-YQtvlnIHTzSBAo31FCzlfXpAGfZEX4gZoyXmbU-5F734GyP69hwSerbCR0dOO3g/exec";
+  // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL HERE:
+  const SCRIPT_URL = "YOUR_APPS_SCRIPT_URL_HERE";
 
   let isProcessing = false;
-  const scannedSet = new Set();
 
   function showStatus(message, isSuccess) {
     const statusDiv = document.getElementById('status');
@@ -228,40 +54,35 @@
 
   function handleScan(scannedId) {
     if (isProcessing) return;
+    isProcessing = true;
 
     const cleanId = scannedId.trim().toUpperCase();
+    showStatus(`Verifying ${cleanId} with backend...`, true);
 
-    // Prevent local duplicate scanning
-    if (scannedSet.has(cleanId)) {
-      showStatus("ALREADY SCANNED: " + cleanId, false);
-      return;
-    }
-
-    isProcessing = true;
-    showStatus("Processing " + cleanId + "...", true);
-    scannedSet.add(cleanId);
-
-    // Post to Google Apps Script
+    // Send request to Google Sheets backend for server-side verification
     fetch(SCRIPT_URL, {
       method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'text/plain'
-      },
-      body: JSON.stringify({ scannedId: cleanId })
+      body: JSON.stringify({ 
+        scannedId: cleanId, 
+        timestamp: new Date().toISOString() 
+      })
+    })
+    .then(response => response.json())
+    .then(result => {
+      showStatus(result.message, result.success);
+      setTimeout(() => {
+        document.getElementById('status').style.display = 'none';
+        isProcessing = false;
+      }, 3000);
     })
     .catch(err => {
-      console.error("Fetch error:", err);
+      console.error("Error:", err);
+      showStatus("Connection error. Try again.", false);
+      setTimeout(() => {
+        document.getElementById('status').style.display = 'none';
+        isProcessing = false;
+      }, 3000);
     });
-
-    setTimeout(() => {
-      showStatus("Marked Present: " + cleanId, true);
-    }, 300);
-
-    setTimeout(() => {
-      document.getElementById('status').style.display = 'none';
-      isProcessing = false;
-    }, 2500);
   }
 
   function submitManual() {
@@ -273,7 +94,6 @@
     }
   }
 
-  // Initialize QR Scanner
   const html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
     fps: 10, 
     qrbox: { width: 220, height: 220 } 
