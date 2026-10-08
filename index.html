@@ -1,358 +1,1706 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Event Scanner</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
-  <style>
-    :root {
-      --primary: #0284c7;
-      --primary-hover: #0369a1;
-      --bg: #090d16;
-      --card-bg: #1e293b;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --border: #334155;
-    }
 
-    * { box-sizing: border-box; }
+<meta charset="UTF-8">
 
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
-    .app-card {
-      background: var(--card-bg);
-      width: 100%;
-      max-width: 480px;
-      padding: 16px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      margin-top: 8px;
-    }
+<title>WPF26 Scanner</title>
 
-    h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin: 0 0 2px 0;
-      text-align: center;
-    }
 
-    .subtitle {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 
-    /* Live Info Panel */
-    .info-panel {
-      background: #0f172a;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      margin-bottom: 14px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      text-align: center;
-    }
 
-    .info-item .label {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+<style>
 
-    .info-item .value {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #38bdf8;
-      margin-top: 2px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .info-full {
-      grid-column: span 2;
-      border-top: 1px solid var(--border);
-      padding-top: 4px;
-      margin-top: 2px;
-    }
 
-    #reader {
-      width: 100% !important;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid var(--border) !important;
-      background: #000;
-    }
-    
-    #reader video {
-      object-fit: cover;
-    }
+html,
+body {
 
-    #status {
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 8px;
-      font-weight: 700;
-      text-align: center;
-      display: none;
-      font-size: 0.95rem;
-      line-height: 1.3;
-    }
+  margin: 0;
 
-    .status-success {
-      background: #064e3b;
-      color: #34d399;
-      border: 1px solid #059669;
-    }
+  padding: 0;
 
-    .status-error {
-      background: #7f1d1d;
-      color: #f87171;
-      border: 1px solid #dc2626;
-    }
+  min-height: 100%;
 
-    .manual-section {
-      margin-top: 14px;
-      border-top: 1px solid var(--border);
-      padding-top: 12px;
-    }
+  background: #101010;
 
-    label {
-      display: block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-    }
+  color: #ffffff;
 
-    .input-group {
-      display: flex;
-      gap: 8px;
-    }
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    input {
-      flex: 1;
-      background: #0f172a;
-      color: var(--text);
-      padding: 10px 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      outline: none;
-    }
+}
 
-    input:focus {
-      border-color: var(--primary);
-    }
 
-    .btn-submit {
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      padding: 0 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
+body {
 
-    .btn-submit:active {
-      background: var(--primary-hover);
-    }
-  </style>
+  padding: 12px;
+
+}
+
+
+.container {
+
+  width: 100%;
+
+  max-width: 520px;
+
+  margin:
+    0 auto;
+
+}
+
+
+/*******************************************************
+ * HEADER
+ *******************************************************/
+
+.header {
+
+  text-align: center;
+
+  padding:
+    8px 0 12px;
+
+}
+
+
+.header h1 {
+
+  margin: 0;
+
+  font-size: 23px;
+
+  line-height: 1.2;
+
+}
+
+
+.header p {
+
+  margin:
+    5px 0 0;
+
+  font-size: 12px;
+
+  opacity: 0.55;
+
+}
+
+
+/*******************************************************
+ * ACTIVE FOOD
+ *******************************************************/
+
+.food-panel {
+
+  margin-bottom: 10px;
+
+  padding:
+    13px 10px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  background: #202020;
+
+}
+
+
+.food-label {
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  opacity: 0.55;
+
+}
+
+
+.food-name {
+
+  margin-top: 3px;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+}
+
+
+.food-state {
+
+  margin-top: 3px;
+
+  font-size: 12px;
+
+  opacity: 0.65;
+
+}
+
+
+/*******************************************************
+ * SCANNER
+ *******************************************************/
+
+.scanner-card {
+
+  padding: 10px;
+
+  border-radius: 15px;
+
+  background: #1b1b1b;
+
+}
+
+
+#reader {
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border-radius: 11px;
+
+}
+
+
+#reader video {
+
+  width: 100% !important;
+
+  height: auto !important;
+
+  border-radius: 11px;
+
+}
+
+
+/*******************************************************
+ * STATUS
+ *******************************************************/
+
+.status {
+
+  min-height: 84px;
+
+  margin-top: 10px;
+
+  padding: 13px;
+
+  border-radius: 11px;
+
+  background: #292929;
+
+  text-align: center;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 5px;
+
+}
+
+
+.status-title {
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+}
+
+
+.status-message {
+
+  font-size: 13px;
+
+  opacity: 0.85;
+
+}
+
+
+/*******************************************************
+ * STATUS TYPES
+ *******************************************************/
+
+.status.success {
+
+  background: #123d24;
+
+}
+
+
+.status.warning {
+
+  background: #493a10;
+
+}
+
+
+.status.error {
+
+  background: #491b1b;
+
+}
+
+
+.status.processing {
+
+  background: #18364b;
+
+}
+
+
+/*******************************************************
+ * ATTENDEE
+ *******************************************************/
+
+.attendee {
+
+  display: none;
+
+  margin-top: 9px;
+
+  padding: 11px;
+
+  border-radius: 10px;
+
+  background: #242424;
+
+  text-align: center;
+
+}
+
+
+.attendee-name {
+
+  font-size: 19px;
+
+  font-weight: bold;
+
+}
+
+
+.attendee-id {
+
+  margin-top: 3px;
+
+  font-size: 12px;
+
+  opacity: 0.55;
+
+}
+
+
+/*******************************************************
+ * MANUAL ENTRY
+ *******************************************************/
+
+.manual {
+
+  margin-top: 10px;
+
+  padding: 11px;
+
+  border-radius: 15px;
+
+  background: #1b1b1b;
+
+}
+
+
+.manual-title {
+
+  margin-bottom: 7px;
+
+  font-size: 12px;
+
+  opacity: 0.55;
+
+}
+
+
+.manual-row {
+
+  display: flex;
+
+  gap: 7px;
+
+}
+
+
+.manual input {
+
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 12px;
+
+  border: none;
+
+  outline: none;
+
+  border-radius: 8px;
+
+  background: #292929;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  text-transform: uppercase;
+
+}
+
+
+.manual button {
+
+  padding:
+    0 16px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #000000;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+}
+
+
+.manual button:active {
+
+  transform:
+    scale(0.97);
+
+}
+
+
+/*******************************************************
+ * FOOTER
+ *******************************************************/
+
+.last-scan {
+
+  min-height: 16px;
+
+  margin-top: 7px;
+
+  text-align: center;
+
+  font-size: 11px;
+
+  opacity: 0.35;
+
+}
+
+
+.footer {
+
+  padding:
+    10px 0;
+
+  text-align: center;
+
+  font-size: 10px;
+
+  opacity: 0.25;
+
+}
+
+</style>
+
 </head>
+
+
 <body>
 
-<div class="app-card">
-  <h1>Event Scanner</h1>
-  <p class="subtitle">Oct 8 & 9, 2026</p>
 
-  <div class="info-panel">
-    <div class="info-item">
-      <div class="label">Date</div>
-      <div class="value" id="currentDate">--</div>
-    </div>
-    <div class="info-item">
-      <div class="label">Time</div>
-      <div class="value" id="currentTime">--</div>
-    </div>
-    <div class="info-item info-full">
-      <div class="label">Active Mode</div>
-      <div class="value" id="currentStage">Checking schedule...</div>
-    </div>
+<div class="container">
+
+
+  <!-- HEADER -->
+
+  <div class="header">
+
+    <h1>
+      WORLD PEACE FESTIVAL
+    </h1>
+
+    <p>
+      2026 • Attendance Scanner
+    </p>
+
   </div>
 
-  <div id="reader"></div>
-  <div id="status"></div>
 
-  <div class="manual-section">
-    <label for="manualId">Manual ID Entry</label>
-    <div class="input-group">
-      <input type="text" id="manualId" placeholder="Enter ID..." autocomplete="off" autocapitalize="characters">
-      <button class="btn-submit" onclick="submitManual()">Submit</button>
+  <!-- CURRENT FOOD -->
+
+  <div class="food-panel">
+
+    <div class="food-label">
+      CURRENT FOOD
     </div>
+
+    <div
+      id="foodName"
+      class="food-name"
+    >
+      CHECK-IN ONLY
+    </div>
+
+    <div
+      id="foodState"
+      class="food-state"
+    >
+      No food service is currently active
+    </div>
+
   </div>
+
+
+  <!-- SCANNER -->
+
+  <div class="scanner-card">
+
+    <div id="reader"></div>
+
+
+    <!-- STATUS -->
+
+    <div
+      id="status"
+      class="status"
+    >
+
+      <div
+        id="statusTitle"
+        class="status-title"
+      >
+        READY
+      </div>
+
+      <div
+        id="statusMessage"
+        class="status-message"
+      >
+        Scan attendee QR code
+      </div>
+
+    </div>
+
+
+    <!-- ATTENDEE -->
+
+    <div
+      id="attendee"
+      class="attendee"
+    >
+
+      <div
+        id="attendeeName"
+        class="attendee-name"
+      ></div>
+
+      <div
+        id="attendeeId"
+        class="attendee-id"
+      ></div>
+
+    </div>
+
+
+    <div
+      id="lastScan"
+      class="last-scan"
+    ></div>
+
+  </div>
+
+
+  <!-- MANUAL ID -->
+
+  <div class="manual">
+
+    <div class="manual-title">
+      MANUAL ID ENTRY
+    </div>
+
+
+    <div class="manual-row">
+
+      <input
+        id="manualId"
+        type="text"
+        placeholder="Enter attendee ID"
+        autocomplete="off"
+        autocapitalize="characters"
+      >
+
+
+      <button
+        id="manualButton"
+        type="button"
+      >
+        SUBMIT
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="footer">
+
+    Scanner controlled by Google Sheet
+
+  </div>
+
+
 </div>
 
+
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzFFd-YQtvlnIHTzSBAo31FCzlfXpAGfZEX4gZoyXmbU-5F734GyP69hwSerbCR0dOO3g/exec";
 
-  let isProcessing = false;
-  let lastScannedId = "";
-  let lastScanTime = 0;
-  const SCAN_COOLDOWN = 3000; // 3 seconds fast cooldown
+/*******************************************************
+ * CONFIGURATION
+ *******************************************************/
 
-  // Fast Audio Feedback Synthesizer
-  function playSound(type) {
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzFFd-YQtvlnIHTzSBAo31FCzlfXpAGfZEX4gZoyXmbU-5F734GyP69hwSerbCR0dOO3g/exec";
 
-      if (type === 'success') {
-        osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
-        osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.08); // A5
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.25);
-      } else {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.setValueAtTime(100, audioCtx.currentTime + 0.12);
-        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
-      }
-    } catch (e) {
-      console.log("Audio skipped", e);
+
+/*
+ * How often the frontend checks the spreadsheet
+ * for the current food header.
+ */
+
+const FOOD_REFRESH_MS =
+  5000;
+
+
+/*
+ * Local duplicate protection.
+ *
+ * Backend has the real protection.
+ */
+
+const LOCAL_COOLDOWN_MS =
+  2500;
+
+
+/*******************************************************
+ * STATE
+ *******************************************************/
+
+let processing =
+  false;
+
+
+let lastScannedId =
+  "";
+
+
+let lastScanTime =
+  0;
+
+
+let activeFood =
+  "";
+
+
+let audioContext =
+  null;
+
+
+/*******************************************************
+ * STATUS
+ *******************************************************/
+
+function setStatus(
+  title,
+  message,
+  type
+) {
+
+  const status =
+    document.getElementById(
+      "status"
+    );
+
+
+  document.getElementById(
+    "statusTitle"
+  ).textContent =
+    title;
+
+
+  document.getElementById(
+    "statusMessage"
+  ).textContent =
+    message;
+
+
+  status.className =
+    "status " +
+    (
+      type || ""
+    );
+
+}
+
+
+/*******************************************************
+ * SHOW ATTENDEE
+ *******************************************************/
+
+function showAttendee(
+  id,
+  name
+) {
+
+  const box =
+    document.getElementById(
+      "attendee"
+    );
+
+
+  document.getElementById(
+    "attendeeName"
+  ).textContent =
+    name ||
+    "Attendee";
+
+
+  document.getElementById(
+    "attendeeId"
+  ).textContent =
+    id;
+
+
+  box.style.display =
+    "block";
+
+}
+
+
+/*******************************************************
+ * HIDE ATTENDEE
+ *******************************************************/
+
+function hideAttendee() {
+
+  document.getElementById(
+    "attendee"
+  ).style.display =
+    "none";
+
+}
+
+
+/*******************************************************
+ * UPDATE LAST SCAN
+ *******************************************************/
+
+function updateLastScan(
+  id
+) {
+
+  document.getElementById(
+    "lastScan"
+  ).textContent =
+    "Last scan: " +
+    id;
+
+}
+
+
+/*******************************************************
+ * CLEAN ID
+ *******************************************************/
+
+function cleanId(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+    .trim()
+    .replace(/\s+/g, "")
+    .toUpperCase();
+
+}
+
+
+/*******************************************************
+ * AUDIO
+ *******************************************************/
+
+function playSound(
+  type
+) {
+
+  try {
+
+    if (!audioContext) {
+
+      audioContext =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
+
     }
+
+
+    if (
+      audioContext.state ===
+      "suspended"
+    ) {
+
+      audioContext.resume();
+
+    }
+
+
+    const oscillator =
+      audioContext.createOscillator();
+
+
+    const gain =
+      audioContext.createGain();
+
+
+    oscillator.connect(
+      gain
+    );
+
+
+    gain.connect(
+      audioContext.destination
+    );
+
+
+    if (
+      type === "success"
+    ) {
+
+      oscillator.frequency.value =
+        900;
+
+    } else if (
+      type === "warning"
+    ) {
+
+      oscillator.frequency.value =
+        450;
+
+    } else {
+
+      oscillator.frequency.value =
+        250;
+
+    }
+
+
+    gain.gain.setValueAtTime(
+      0.001,
+      audioContext.currentTime
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.15,
+      audioContext.currentTime + 0.01
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+      0.001,
+      audioContext.currentTime + 0.15
+    );
+
+
+    oscillator.start();
+
+
+    oscillator.stop(
+      audioContext.currentTime + 0.16
+    );
+
+  } catch (error) {
+
+    /*
+     * Audio must never interfere with scanning.
+     */
+
   }
 
-  // Live Dashboard Clock & Stage Matcher
-  function updateClockAndStage() {
-    const now = new Date();
-    document.getElementById('currentDate').innerText = now.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-    document.getElementById('currentTime').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
 
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const day = now.getDate();
-    const timeDecimal = now.getHours() + (now.getMinutes() / 60);
 
-    let stageText = "Check-In / Arrival Mode";
+/*******************************************************
+ * VIBRATION
+ *******************************************************/
 
-    if (year === 2026 && month === 9) {
-      if (day === 8) {
-        if (timeDecimal >= 11.5 && timeDecimal < 16.0) stageText = "Day 1 Lunch Active";
-        else if (timeDecimal >= 18.0 && timeDecimal < 22.0) stageText = "Day 1 Dinner Active";
-      } else if (day === 9) {
-        if (timeDecimal >= 7.5 && timeDecimal < 11.0) stageText = "Day 2 Breakfast Active";
-        else if (timeDecimal >= 11.5 && timeDecimal < 16.0) stageText = "Day 2 Lunch Active";
-        else if (timeDecimal >= 18.0 && timeDecimal < 22.0) stageText = "Day 2 Dinner Active";
-      }
-    }
-    document.getElementById('currentStage').innerText = stageText;
-  }
+function vibrate(
+  pattern
+) {
 
-  setInterval(updateClockAndStage, 1000);
-  updateClockAndStage();
+  try {
 
-  function showStatus(message, isSuccess) {
-    const statusDiv = document.getElementById('status');
-    statusDiv.innerText = message;
-    statusDiv.className = isSuccess ? 'status-success' : 'status-error';
-    statusDiv.style.display = 'block';
-    playSound(isSuccess ? 'success' : 'error');
-  }
+    if (
+      navigator.vibrate
+    ) {
 
-  function handleScan(scannedId) {
-    if (!scannedId) return;
-    const cleanId = scannedId.trim().toUpperCase();
-    const now = Date.now();
+      navigator.vibrate(
+        pattern
+      );
 
-    if (cleanId === lastScannedId && (now - lastScanTime < SCAN_COOLDOWN)) {
-      return; // Cooldown active
     }
 
-    if (isProcessing) return;
-    isProcessing = true;
+  } catch (error) {}
 
-    lastScannedId = cleanId;
-    lastScanTime = now;
+}
 
-    showStatus(`Verifying ${cleanId}...`, true);
 
-    // Call backend and read authoritative JSON response
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8',
+/*******************************************************
+ * READ CURRENT FOOD
+ *******************************************************/
+
+async function refreshFood() {
+
+  try {
+
+    const response =
+      await fetch(
+        SCRIPT_URL +
+        "?t=" +
+        Date.now(),
+        {
+
+          method:
+            "GET",
+
+          cache:
+            "no-store"
+
+        }
+      );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
+
+
+    const result =
+      await response.json();
+
+
+    if (
+      !result.success
+    ) {
+
+      return;
+
+    }
+
+
+    const food =
+      String(
+        result.activeFood ||
+        ""
+      ).trim();
+
+
+    /*
+     * No food column.
+     */
+
+    if (!food) {
+
+      activeFood =
+        "";
+
+
+      document.getElementById(
+        "foodName"
+      ).textContent =
+        "CHECK-IN ONLY";
+
+
+      document.getElementById(
+        "foodState"
+      ).textContent =
+        "No food service is currently active";
+
+
+      return;
+
+    }
+
+
+    /*
+     * Food column exists.
+     */
+
+    activeFood =
+      food;
+
+
+    document.getElementById(
+      "foodName"
+    ).textContent =
+      food;
+
+
+    document.getElementById(
+      "foodState"
+    ).textContent =
+      "SCANNING ACTIVE";
+
+  } catch (error) {
+
+    /*
+     * Do not change the current display if
+     * a refresh temporarily fails.
+     *
+     * This avoids flickering.
+     */
+
+    console.log(
+      "Food refresh failed:",
+      error
+    );
+
+  }
+
+}
+
+
+/*******************************************************
+ * HANDLE BACKEND RESULT
+ *******************************************************/
+
+function handleResult(
+  result,
+  scannedId
+) {
+
+  if (
+    !result ||
+    !result.code
+  ) {
+
+    setStatus(
+      "ERROR",
+      "Unexpected server response.",
+      "error"
+    );
+
+
+    playSound(
+      "error"
+    );
+
+
+    return;
+
+  }
+
+
+  switch (
+    result.code
+  ) {
+
+
+    /***********************************************
+     * CHECK-IN
+     ***********************************************/
+
+    case "CHECK_IN_RECORDED":
+
+      setStatus(
+        "CHECK-IN SUCCESS",
+        "Attendee checked in successfully.",
+        "success"
+      );
+
+
+      showAttendee(
+        result.attendeeId ||
+          scannedId,
+
+        result.attendeeName ||
+          ""
+      );
+
+
+      updateLastScan(
+        result.attendeeId ||
+          scannedId
+      );
+
+
+      playSound(
+        "success"
+      );
+
+
+      vibrate(
+        80
+      );
+
+
+      break;
+
+
+    /***********************************************
+     * ALREADY CHECKED IN
+     * NO FOOD COLUMN
+     ***********************************************/
+
+    case "CHECKED_IN_NO_FOOD":
+
+      setStatus(
+        "CHECKED IN",
+        "No food service is currently active.",
+        "warning"
+      );
+
+
+      showAttendee(
+        result.attendeeId ||
+          scannedId,
+
+        result.attendeeName ||
+          ""
+      );
+
+
+      updateLastScan(
+        result.attendeeId ||
+          scannedId
+      );
+
+
+      playSound(
+        "warning"
+      );
+
+
+      vibrate(
+        100
+      );
+
+
+      break;
+
+
+    /***********************************************
+     * FOOD RECORDED
+     ***********************************************/
+
+    case "FOOD_RECORDED":
+
+      setStatus(
+        "FOOD RECORDED",
+        result.food +
+          " recorded successfully.",
+        "success"
+      );
+
+
+      showAttendee(
+        result.attendeeId ||
+          scannedId,
+
+        result.attendeeName ||
+          ""
+      );
+
+
+      updateLastScan(
+        result.attendeeId ||
+          scannedId
+      );
+
+
+      playSound(
+        "success"
+      );
+
+
+      vibrate(
+        [60, 50, 60]
+      );
+
+
+      break;
+
+
+    /***********************************************
+     * FOOD ALREADY RECORDED
+     ***********************************************/
+
+    case "FOOD_ALREADY_RECORDED":
+
+      setStatus(
+        "NOT ALLOWED",
+        result.food +
+          " is already recorded.",
+        "warning"
+      );
+
+
+      showAttendee(
+        result.attendeeId ||
+          scannedId,
+
+        result.attendeeName ||
+          ""
+      );
+
+
+      updateLastScan(
+        result.attendeeId ||
+          scannedId
+      );
+
+
+      playSound(
+        "warning"
+      );
+
+
+      vibrate(
+        [100, 70, 100]
+      );
+
+
+      break;
+
+
+    /***********************************************
+     * ID NOT FOUND
+     ***********************************************/
+
+    case "ID_NOT_FOUND":
+
+      setStatus(
+        "NOT FOUND",
+        "This attendee ID does not exist.",
+        "error"
+      );
+
+
+      hideAttendee();
+
+
+      playSound(
+        "error"
+      );
+
+
+      vibrate(
+        [100, 70, 100]
+      );
+
+
+      break;
+
+
+    /***********************************************
+     * SERVER BUSY
+     ***********************************************/
+
+    case "SERVER_BUSY":
+
+      setStatus(
+        "PLEASE RETRY",
+        "Scanner server is busy.",
+        "warning"
+      );
+
+
+      playSound(
+        "warning"
+      );
+
+
+      break;
+
+
+    /***********************************************
+     * OTHER ERROR
+     ***********************************************/
+
+    default:
+
+      setStatus(
+        "NOT ALLOWED",
+        result.message ||
+          "Scan could not be processed.",
+        "error"
+      );
+
+
+      playSound(
+        "error"
+      );
+
+
+      vibrate(
+        [100, 70, 100]
+      );
+
+  }
+
+}
+
+
+/*******************************************************
+ * SEND SCAN
+ *******************************************************/
+
+async function processScan(
+  rawId
+) {
+
+  const scannedId =
+    cleanId(
+      rawId
+    );
+
+
+  if (!scannedId) {
+
+    return;
+
+  }
+
+
+  /*
+   * Prevent camera from firing multiple requests
+   * while one request is still being processed.
+   */
+
+  if (
+    processing
+  ) {
+
+    return;
+
+  }
+
+
+  /*
+   * Device-level cooldown.
+   */
+
+  const now =
+    Date.now();
+
+
+  if (
+    scannedId ===
+      lastScannedId &&
+
+    (
+      now -
+      lastScanTime
+    ) <
+      LOCAL_COOLDOWN_MS
+  ) {
+
+    return;
+
+  }
+
+
+  lastScannedId =
+    scannedId;
+
+
+  lastScanTime =
+    now;
+
+
+  processing =
+    true;
+
+
+  hideAttendee();
+
+
+  setStatus(
+    "VERIFYING",
+    "Checking attendee...",
+    "processing"
+  );
+
+
+  try {
+
+    const response =
+      await fetch(
+        SCRIPT_URL,
+        {
+
+          method:
+            "POST",
+
+          headers: {
+
+            "Content-Type":
+              "text/plain;charset=utf-8"
+
+          },
+
+          body:
+            JSON.stringify({
+
+              scannedId:
+                scannedId
+
+            })
+
+        }
+      );
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
+    }
+
+
+    const result =
+      await response.json();
+
+
+    handleResult(
+      result,
+      scannedId
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    setStatus(
+      "CONNECTION ERROR",
+      "Could not contact server. Please scan again.",
+      "error"
+    );
+
+
+    playSound(
+      "error"
+    );
+
+
+    vibrate(
+      [100, 80, 100]
+    );
+
+  } finally {
+
+    /*
+     * Allow scanner to accept another QR.
+     */
+
+    setTimeout(
+      function() {
+
+        processing =
+          false;
+
       },
-      body: JSON.stringify({ 
-        scannedId: cleanId, 
-        timestamp: new Date().toISOString() 
-      })
-    })
-    .then(response => response.json())
-    .then(result => {
-      showStatus(result.message, result.success);
-      setTimeout(() => {
-        document.getElementById('status').style.display = 'none';
-        isProcessing = false;
-      }, 2500); // Quick reset for fast scanning lines
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      showStatus("Connection error. Try again.", false);
-      setTimeout(() => {
-        document.getElementById('status').style.display = 'none';
-        isProcessing = false;
-      }, 2500);
-    });
+      400
+    );
+
   }
 
-  function submitManual() {
-    const input = document.getElementById('manualId');
-    const val = input.value.trim();
-    if (val !== "") {
-      handleScan(val);
-      input.value = "";
+}
+
+
+/*******************************************************
+ * CAMERA SCAN
+ *******************************************************/
+
+function handleCameraScan(
+  decodedText
+) {
+
+  processScan(
+    decodedText
+  );
+
+}
+
+
+/*******************************************************
+ * MANUAL SUBMISSION
+ *******************************************************/
+
+function submitManualId() {
+
+  const input =
+    document.getElementById(
+      "manualId"
+    );
+
+
+  const id =
+    cleanId(
+      input.value
+    );
+
+
+  if (!id) {
+
+    setStatus(
+      "ENTER ID",
+      "Please enter an attendee ID.",
+      "warning"
+    );
+
+
+    return;
+
+  }
+
+
+  input.value =
+    "";
+
+
+  processScan(
+    id
+  );
+
+}
+
+
+/*******************************************************
+ * MANUAL ENTER KEY
+ *******************************************************/
+
+document
+  .getElementById(
+    "manualId"
+  )
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key ===
+        "Enter"
+      ) {
+
+        event.preventDefault();
+
+        submitManualId();
+
+      }
+
     }
-  }
+  );
 
-  // Initialize QR Camera Scanner optimized for mobile viewfinders
-  const html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
-    fps: 15, 
-    qrbox: { width: 200, height: 200 },
-    aspectRatio: 1.0
-  }, false);
-  
-  html5QrcodeScanner.render((decodedText) => {
-    handleScan(decodedText);
-  }, (error) => {});
+
+/*******************************************************
+ * MANUAL BUTTON
+ *******************************************************/
+
+document
+  .getElementById(
+    "manualButton"
+  )
+  .addEventListener(
+    "click",
+    submitManualId
+  );
+
+
+/*******************************************************
+ * START CAMERA
+ *******************************************************/
+
+function startScanner() {
+
+  const scanner =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  const config = {
+
+    /*
+     * 20 frames/sec gives good QR responsiveness
+     * without unnecessarily hammering the phone.
+     */
+
+    fps:
+      20,
+
+
+    qrbox:
+      function(
+        viewfinderWidth,
+        viewfinderHeight
+      ) {
+
+        const size =
+          Math.floor(
+            Math.min(
+              viewfinderWidth,
+              viewfinderHeight
+            ) *
+            0.72
+          );
+
+
+        return {
+
+          width:
+            size,
+
+          height:
+            size
+
+        };
+
+      },
+
+
+    aspectRatio:
+      1.0,
+
+
+    disableFlip:
+      false
+
+  };
+
+
+  scanner
+    .start(
+
+      {
+        facingMode:
+          "environment"
+      },
+
+      config,
+
+      function(decodedText) {
+
+        handleCameraScan(
+          decodedText
+        );
+
+      },
+
+      function(errorMessage) {
+
+        /*
+         * QR-not-found messages are normal.
+         * Ignore them.
+         */
+
+      }
+
+    )
+
+    .catch(
+      function(error) {
+
+        console.error(
+          error
+        );
+
+
+        setStatus(
+          "CAMERA ERROR",
+          "Camera could not be started. Check camera permission.",
+          "error"
+        );
+
+      }
+    );
+
+}
+
+
+/*******************************************************
+ * INITIALIZE
+ *******************************************************/
+
+refreshFood();
+
+startScanner();
+
+
+/*******************************************************
+ * PERIODIC FOOD HEADER REFRESH
+ *******************************************************/
+
+setInterval(
+  refreshFood,
+  FOOD_REFRESH_MS
+);
+
 </script>
 
+
 </body>
+
 </html>
